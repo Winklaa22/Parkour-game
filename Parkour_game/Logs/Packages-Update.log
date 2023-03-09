@@ -46,3 +46,14 @@ The following packages were updated:
   com.unity.timeline from version 1.6.2 to 1.6.4
   com.unity.xr.legacyinputhelpers from version 2.1.8 to 2.1.10
   com.unity.visualscripting from version 1.7.7 to 1.7.8
+
+=== Thu Mar  9 19:58:52 2023
+
+Packages were changed.
+Update Mode: mergeDefaultDependencies
+
+The following packages were added:
+  com.unity.analytics@3.6.11
+  com.unity.burst@1.6.1
+  com.unity.inputsystem@1.2.0
+  com.unity.postprocessing@3.2.0
