@@ -6,27 +6,27 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private PlayerMovementStateMachine m_movementStateMashine;
+    private PlayerMovementStateMachine m_movementStateMachine;
     
     private void Awake()
     {
-        m_movementStateMashine = new PlayerMovementStateMachine(this);
+        m_movementStateMachine = new PlayerMovementStateMachine(this);
     }
 
     private void Start()
     {
-        m_movementStateMashine.ChangeState(m_movementStateMashine.IdleState);
+        m_movementStateMachine.ChangeState(m_movementStateMachine.IdleState);
     }
 
     private void Update()
     {
-        m_movementStateMashine.HandleInput();
+        m_movementStateMachine.HandleInput();
         
-        m_movementStateMashine.Update();
+        m_movementStateMachine.Update();
     }
 
     private void FixedUpdate()
     {
-        m_movementStateMashine.PhysicsUpdate();
+        m_movementStateMachine.PhysicsUpdate();
     }
 }

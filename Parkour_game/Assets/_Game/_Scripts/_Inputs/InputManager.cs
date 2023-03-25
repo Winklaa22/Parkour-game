@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,21 +6,25 @@ using UnityEngine;
 public class InputManager : SceneSingleton<InputManager>
 {
     private InputActions m_inputActions;
+    public InputActions Actions => m_inputActions;
+
+    private InputActions.PlayerActions m_playerActions;
+    public InputActions.PlayerActions PlayerActions => m_playerActions;
 
     protected override void OnAwake()
     {
         base.OnAwake();
         m_inputActions = new InputActions();
+        m_playerActions = m_inputActions.Player;
+    }
+
+    private void OnEnable()
+    {
         m_inputActions.Enable();
     }
 
-    public Vector2 GetMovementValues()
+    private void OnDisable()
     {
-        return m_inputActions.Player.Movement.ReadValue<Vector2>();
-    }
-
-    public Vector2 GetLookValues()
-    {
-        return m_inputActions.Player.Look.ReadValue<Vector2>();
+        m_inputActions.Disable();
     }
 }
