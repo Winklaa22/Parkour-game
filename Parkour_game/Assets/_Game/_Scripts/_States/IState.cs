@@ -6,10 +6,12 @@ namespace _Game._Scripts._States
     {
         void Enter();
 
-        void Exit();
-
+        void Exit()
+            ;
+        void HandleInput();
+        
         void Update();
 
-        void Handle();
+        void PhysicsUpdate();
     }
 }
