@@ -11,8 +11,6 @@ public class MovementData
     [Header("Ground")]
     public float DetectGroundSphereRadius = .25f;
     public float DetectGroundSpherePos = .7f;
-    [HideInInspector] public float GroundAcceleration = 0.0f;
-    [HideInInspector] public float GroundMaxSpeed = 0.0f;
 
     [Header("Walking")]
     public float WalkingAcceleration = 7.0f;
