@@ -70,13 +70,26 @@ public class PlayerMovement : MonoBehaviour
     private RaycastHit groundHitInfo;
     private float2 m_inputs;
     private Ray m_climpRay;
+
+    [Header("Inputs")] 
+    private InputActions m_inputActions;
+    private bool m_sliceInput;
+    private bool m_crouchInput;
+
+
     [SerializeField] private float m_detectCellingSpherePos;
     [SerializeField] private float m_detectCellingSphereRadius;
     [SerializeField] private bool m_isCrouching;
 
+    private void Awake()
+    {
+        m_inputActions = new InputActions();
+        m_inputActions.Enable();
+    }
+
     private void CheckInputValues()
     {
-        m_inputs = new float2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        m_inputs = m_inputActions.Player.Movement.ReadValue<Vector2>();
 
         float2 inputWorld;
         {
@@ -143,6 +156,11 @@ public class PlayerMovement : MonoBehaviour
             : EnvironmentState.AIR;
     }
 
+    private float MovementMagnitude()
+    {
+        return m_inputActions.Player.Movement.ReadValue<Vector2>().magnitude;
+    }
+
     private void SetMovement()
     {
         m_rigidbody.velocity = new float3(velocity.x, m_rigidbody.velocity.y, velocity.z);
@@ -167,12 +185,12 @@ public class PlayerMovement : MonoBehaviour
             {
                 m_movementState = MovementStates.WALKING;
                 
-                if (new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).magnitude > 0)
+                if (MovementMagnitude() > 0)
                     m_playerState = PlayerState.MOVING;
                 break;
             }
             case PlayerState.MOVING:
-                if (new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).magnitude <= 0)
+                if (MovementMagnitude() <= 0)
                     m_playerState = PlayerState.IDLE;
                 
                 SetMovement();
@@ -185,7 +203,7 @@ public class PlayerMovement : MonoBehaviour
     
     private void SetCameraRotate()
     {
-        var mouse = new float2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+        var mouse = (float2) m_inputActions.Player.Look.ReadValue<Vector2>();;
 
         pitch -= mouse.y * m_mouseSensivity;
         yaw += mouse.x * m_mouseSensivity;
@@ -198,7 +216,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(HasSomethingOverhead());
         CheckInputValues();
         SetCameraRotate();
         SetEnvironmentState();
