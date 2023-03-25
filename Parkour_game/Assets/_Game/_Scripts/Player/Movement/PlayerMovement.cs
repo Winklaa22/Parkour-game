@@ -12,24 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody m_rigidbody;
     [SerializeField] private float m_friction;
 
-    [Header("Air")]
-    [SerializeField] private float m_airSpeed;
-    [SerializeField] private float m_airAcceleration;
-    [SerializeField] private float m_jumpVelocity;
-
-    [Header("Ground")]
-    [SerializeField] private float m_detectGroundSphereRadius = .25f;
-    [SerializeField] private float m_detectGroundSpherePos = .7f;
-    [SerializeField] private float m_groundAcceleration;
-    private float m_groundMaxSpeed;
-    
-    [Header("Walking")]
-    [SerializeField] private float m_walkingAcceleration = 14f;
-    [SerializeField] private float m_walkingMaxSpeed = 14f;
-    
-    [Header("Running")]
-    [SerializeField] private float m_runningAcceleration = 20f;
-    [SerializeField] private float m_runningMaxSpeed = 20f;
+    [SerializeField] private MovementData m_movementData;
 
     [Header("Mouse")]
     [SerializeField] private float m_mouseSensivity = 1.0f;
@@ -118,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
         velocity.xz += dirH * dv;
     }
 
-    private void AirMovement() => Accelerate(inputDirection, m_airAcceleration, m_airSpeed * inputLength);
+    private void AirMovement() => Accelerate(inputDirection, m_movementData.AirAcceleration, m_movementData.AirSpeed * inputLength);
 
     private void GroundMovement()
     {
@@ -130,28 +113,28 @@ public class PlayerMovement : MonoBehaviour
         switch (m_movementState)
         {
             case MovementStates.WALKING:
-                m_groundAcceleration = m_walkingAcceleration;
-                m_groundMaxSpeed = m_walkingMaxSpeed;
+                m_movementData.GroundAcceleration = m_movementData.WalkingAcceleration;
+                m_movementData.GroundMaxSpeed = m_movementData.WalkingMaxSpeed;
                 break;
             
             case MovementStates.RUNNING:
-                m_groundAcceleration = m_runningAcceleration;
-                m_groundMaxSpeed = m_runningMaxSpeed;
+                m_movementData.GroundAcceleration = m_movementData.RunningAcceleration;
+                m_movementData.GroundMaxSpeed = m_movementData.RunningMaxSpeed;
                 break;
             
             case MovementStates.CROUCHING:
-                m_groundAcceleration = m_crouchingAcceleration;
-                m_groundMaxSpeed = m_crouchingMaxSpeed;
+                m_movementData.GroundAcceleration = m_crouchingAcceleration;
+                m_movementData.GroundMaxSpeed = m_crouchingMaxSpeed;
                 break;
         }
 
             velocity.xz *= math.max(1.0f - m_friction * Time.deltaTime, 0.0f);
-        Accelerate(inputDirection, m_groundAcceleration, m_groundMaxSpeed * inputLength);
+        Accelerate(inputDirection, m_movementData.GroundAcceleration, m_movementData.GroundMaxSpeed * inputLength);
     }
 
     private EnvironmentState GetEnvironmentState()
     {
-        return Physics.SphereCast(transform.position - new Vector3(0, m_detectGroundSpherePos, 0), m_detectGroundSphereRadius, Vector3.down, out groundHitInfo, .1f) 
+        return Physics.SphereCast(transform.position - new Vector3(0, m_movementData.DetectGroundSpherePos, 0), m_movementData.DetectGroundSphereRadius, Vector3.down, out groundHitInfo, .1f) 
             ? EnvironmentState.GROUND 
             : EnvironmentState.AIR;
     }
