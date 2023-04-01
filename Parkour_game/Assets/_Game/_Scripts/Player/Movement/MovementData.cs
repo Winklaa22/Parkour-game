@@ -11,6 +11,7 @@ public class MovementData
     [Header("Ground")]
     public float DetectGroundSphereRadius = .25f;
     public float DetectGroundSpherePos = .7f;
+    public float Friction = 3.0f;
 
     [Header("Walking")]
     public float WalkingAcceleration = 7.0f;

@@ -12,90 +12,71 @@ namespace _Game._Scripts._States.Player_States._Movement
         protected MovementData m_movementData;
         protected float _groundAccelaration;
         protected float _maxGroundSpeed;
+
+        [Header("Movements conditions")] 
+        protected bool _shouldWalk;
         
-        [Header("Inputs")]
-        protected float2 _inputDirection;
-        protected float _inputLength;
-        private Vector2 m_inputs;
         
 
         public PlayerMovementState(PlayerMovementStateMachine stateMachine)
         {
             _stateMachine = stateMachine;
             m_movementData = _stateMachine.Player.MovementData;
+            SetEvents();
+        }
+
+        private void SetEvents()
+        {
+            _stateMachine.Player.PlayerActions.Walk.started += delegate
+            {
+                _shouldWalk = true;
+            };
+
+            _stateMachine.Player.PlayerActions.Walk.canceled += delegate
+            {
+                _shouldWalk = false;
+            };
+            
+            // _stateMachine.Player.Entity_OnCollisionEntered += delegate
+            // {
+            //     _velocity = 0;
+            // };
         }
         
         public virtual void Enter()
         {
-            
+            Debug.Log($"{GetType().Name} enter");
         }
 
         public virtual void Exit()
         {
-            
+            Debug.Log($"{GetType().Name} exit");
         }
 
         public virtual void HandleInput()
         {
-            
         }
 
         public virtual void Update()
         {
-            CheckInputValues();
         }
 
         public virtual void PhysicsUpdate()
         {
-            
+        }
+
+        protected void SetMaxGroundSpeed(float value)
+        {
+            _stateMachine.Player.GroundMaxSpeed = value;
         }
         
-        private void CheckInputValues()
+        protected void SetGroundAcceleration(float value)
         {
-            m_inputs = _stateMachine.Player.PlayerActions.Movement.ReadValue<Vector2>();
-
-            float2 inputWorld;
-            {
-                float input_lenghtsq = math.lengthsq(m_inputs);
-
-                if (input_lenghtsq > 1.0f)
-                    m_inputs /= math.sqrt(input_lenghtsq);
-
-                var yawRad = math.radians(_stateMachine.Player.Yaw);
-                var yawSin = math.sin(yawRad);
-                var yawCos = math.cos(yawRad);
-
-                inputWorld = math.mul(new float2x2(yawCos, yawSin, -yawSin, yawCos), m_inputs);
-            }
-
-            _inputLength = math.length(inputWorld);
-            _inputDirection = math.normalizesafe(inputWorld);
-        }
-        
-        private EnvironmentState GetEnvironmentState()
-        {
-            return Physics.SphereCast( _stateMachine.Player.transform.position - new Vector3(0, m_movementData.DetectGroundSpherePos, 0), m_movementData.DetectGroundSphereRadius, Vector3.down, out groundHitInfo, .1f) 
-                ? EnvironmentState.GROUND 
-                : EnvironmentState.AIR;
+            _stateMachine.Player.GroundAcceleration = value;
         }
 
-        protected void GroundMove()
-        {
-            Accelerate(_inputDirection, _groundAccelaration, _maxGroundSpeed * _inputLength);
-        }
+        protected EnvironmentState GetEnvironmentState() => _stateMachine.Player.GetEnvironmentState();
+        protected bool IsMoving => _stateMachine.Player.Inputs != Vector2.zero;
 
-        protected void AirMove()
-        {
-            Accelerate(_inputDirection, m_movementData.AirAcceleration, m_movementData.AirSpeed * _inputLength);
-        }
-        
-        protected void Accelerate(float2 dirH, float accel, float limit)
-        {
-            var proj = math.dot(_velocity.xz, dirH);
-            var dv = accel * Time.deltaTime;
-            dv = math.min(dv, limit - proj);
-            dv = math.max(dv, 0.0f);
-            _velocity.xz += dirH * dv;
-        }
     }
 }

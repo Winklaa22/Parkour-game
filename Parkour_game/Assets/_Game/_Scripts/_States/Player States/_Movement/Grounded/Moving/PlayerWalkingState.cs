@@ -9,7 +9,20 @@ namespace _Game._Scripts._States.Player_States._Movement.Grounded.Moving
         public override void Enter()
         {
             base.Enter();
-            Accelerate(_inputDirection, _groundAccelaration, _maxGroundSpeed * _inputLength);
+            SetGroundAcceleration(m_movementData.WalkingAcceleration);
+            SetMaxGroundSpeed(m_movementData.WalkingMaxSpeed);
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            
+            if (GetEnvironmentState() == EnvironmentState.AIR)
+                _stateMachine.ChangeState(_stateMachine.AirIdleState);
+
+            if (!IsMoving)
+                _stateMachine.ChangeState(_stateMachine.IdleState);
+
         }
     }
 }

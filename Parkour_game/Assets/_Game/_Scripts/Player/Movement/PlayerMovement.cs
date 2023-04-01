@@ -110,26 +110,26 @@ public class PlayerMovement : MonoBehaviour
             m_movementState = !Input.GetKey(KeyCode.LeftShift) ? MovementStates.RUNNING : MovementStates.WALKING;
         }
 
-        switch (m_movementState)
-        {
-            case MovementStates.WALKING:
-                m_movementData.GroundAcceleration = m_movementData.WalkingAcceleration;
-                m_movementData.GroundMaxSpeed = m_movementData.WalkingMaxSpeed;
-                break;
-            
-            case MovementStates.RUNNING:
-                m_movementData.GroundAcceleration = m_movementData.RunningAcceleration;
-                m_movementData.GroundMaxSpeed = m_movementData.RunningMaxSpeed;
-                break;
-            
-            case MovementStates.CROUCHING:
-                m_movementData.GroundAcceleration = m_crouchingAcceleration;
-                m_movementData.GroundMaxSpeed = m_crouchingMaxSpeed;
-                break;
-        }
-
-            velocity.xz *= math.max(1.0f - m_friction * Time.deltaTime, 0.0f);
-        Accelerate(inputDirection, m_movementData.GroundAcceleration, m_movementData.GroundMaxSpeed * inputLength);
+        // switch (m_movementState)
+        // {
+        //     case MovementStates.WALKING:
+        //         m_movementData.GroundAcceleration = m_movementData.WalkingAcceleration;
+        //         m_movementData.GroundMaxSpeed = m_movementData.WalkingMaxSpeed;
+        //         break;
+        //     
+        //     case MovementStates.RUNNING:
+        //         m_movementData.GroundAcceleration = m_movementData.RunningAcceleration;
+        //         m_movementData.GroundMaxSpeed = m_movementData.RunningMaxSpeed;
+        //         break;
+        //     
+        //     case MovementStates.CROUCHING:
+        //         m_movementData.GroundAcceleration = m_crouchingAcceleration;
+        //         m_movementData.GroundMaxSpeed = m_crouchingMaxSpeed;
+        //         break;
+        // }
+        //
+        //     velocity.xz *= math.max(1.0f - m_friction * Time.deltaTime, 0.0f);
+        // Accelerate(inputDirection, m_movementData.GroundAcceleration, m_movementData.GroundMaxSpeed * inputLength);
     }
 
     private EnvironmentState GetEnvironmentState()

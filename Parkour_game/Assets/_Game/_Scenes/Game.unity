@@ -1538,7 +1538,6 @@ GameObject:
   m_Component:
   - component: {fileID: 576816617}
   - component: {fileID: 576816616}
-  - component: {fileID: 576816615}
   - component: {fileID: 576816618}
   m_Layer: 0
   m_Name: Main Camera
@@ -1547,14 +1546,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &576816615
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 576816614}
-  m_Enabled: 0
 --- !u!20 &576816616
 Camera:
   m_ObjectHideFlags: 0
@@ -2921,7 +2912,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1274582117}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &1274582122
 Camera:
   m_ObjectHideFlags: 0
@@ -3003,6 +2994,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4962039562683002, guid: bbc12ae2f967ec04e8c3c39eeb92733b, type: 3}
   m_PrefabInstance: {fileID: 2011115770}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1435353899
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1435353900}
+  - component: {fileID: 1435353901}
+  m_Layer: 0
+  m_Name: InputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1435353900
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435353899}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2025420634}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1435353901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435353899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30c87d7e398af4144b526913e88d8d1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1489357718
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3147,7 +3182,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1579660284}
   - component: {fileID: 1579660283}
-  - component: {fileID: 1579660282}
   - component: {fileID: 1579660285}
   m_Layer: 0
   m_Name: Player
@@ -3156,51 +3190,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1579660282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1579660281}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9331d0909c4a9a44a0d0d829a28a145, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_playerCollider: {fileID: 119619373}
-  m_rigidbody: {fileID: 1579660283}
-  m_friction: 4
-  m_airSpeed: 1
-  m_airAcceleration: 20
-  m_jumpVelocity: 5
-  m_detectGroundSphereRadius: 0.25
-  m_detectGroundSpherePos: 0.7
-  m_groundAcceleration: 0
-  m_walkingAcceleration: 7
-  m_walkingMaxSpeed: 7
-  m_runningAcceleration: 20
-  m_runningMaxSpeed: 14
-  m_mouseSensivity: 1
-  m_jumpForce: 5
-  m_cameraTransform: {fileID: 1047132763}
-  m_playerState: 0
-  m_environmentState: 0
-  m_movementState: 0
-  m_slicingTime: 1
-  m_sliceAnimDuration: 0.25
-  m_sliceAnimationEase: 12
-  m_crouchingAcceleration: 3
-  m_crouchingMaxSpeed: 3
-  m_crouchingPosition: -0.2763
-  m_crouchingSize: 0.7237288
-  m_crouchingAnimDuration: 0.25
-  m_crouchingCameraPosition: 0
-  m_crouchingAnimationEase: 1
-  m_animator: {fileID: 259220211}
-  m_detectCellingSpherePos: 1
-  m_detectCellingSphereRadius: 0.25
-  m_isCrouching: 0
 --- !u!54 &1579660283
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3243,47 +3232,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1579660281}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Script: {fileID: 11500000, guid: f63ede474b4c33945959322cf643a9f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: fb8617e21571a5e4397d6738b2251a6b, type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 5f87e048-408b-46f6-9612-306d2320d841
-    m_ActionName: Player/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 0f3c038e-2564-425c-9201-f15c028a543e
-    m_ActionName: Player/Slide[/Keyboard/leftCtrl]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 28c8e4ed-7192-4b8f-8458-b518abc19a4f
-    m_ActionName: Player/Jump[/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 65381fb3-1ceb-4b8b-a0f8-58420d9bb910
-    m_ActionName: Player/Walk[/Keyboard/leftShift]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 36318200-e5a3-4487-a5a7-834898bd6de6
-    m_ActionName: Player/Look[/Mouse/delta]
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 259220210}
+  m_playerCollider: {fileID: 119619373}
+  m_rigidbody: {fileID: 1579660283}
+  m_movementData:
+    AirSpeed: 1
+    AirAcceleration: 20
+    JumpVelocity: 5
+    DetectGroundSphereRadius: 0.25
+    DetectGroundSpherePos: 0.7
+    Friction: 3
+    WalkingAcceleration: 7
+    WalkingMaxSpeed: 7
+    RunningAcceleration: 20
+    RunningMaxSpeed: 14
+  m_cameraTransform: {fileID: 1047132763}
+  m_mouseSensivity: 0.1
 --- !u!1 &1624545215
 GameObject:
   m_ObjectHideFlags: 0
@@ -4006,6 +3972,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1158741863}
+  - {fileID: 1435353900}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
