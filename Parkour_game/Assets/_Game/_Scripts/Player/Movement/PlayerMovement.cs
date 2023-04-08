@@ -309,8 +309,7 @@ public class PlayerMovement : MonoBehaviour
             Crouch();
             return;
         }
-        
-        
+
         m_playerCollider.transform.DOLocalMoveY(0, m_sliceAnimDuration).SetEase(m_sliceAnimationEase);
         m_playerCollider.transform.DOScaleY(1, m_sliceAnimDuration).SetEase(m_sliceAnimationEase);
         m_cameraTransform.DOLocalMoveY(.6f, m_sliceAnimDuration).SetEase(m_sliceAnimationEase);

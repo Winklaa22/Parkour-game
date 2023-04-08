@@ -11,7 +11,10 @@ public class PlayerController : MonoBehaviour
     
     [Header("Physics")] 
     [SerializeField] private CapsuleCollider m_playerCollider;
+    public CapsuleCollider PlayerCollider => m_playerCollider;
+
     [SerializeField] private Rigidbody m_rigidbody;
+    public Rigidbody PlayerRigidbody => m_rigidbody;
     public delegate void OnCollisionEntered();
     public OnCollisionEntered Entity_OnCollisionEntered;
 
@@ -21,7 +24,6 @@ public class PlayerController : MonoBehaviour
     private Vector2 m_inputs;
     public Vector2 Inputs => m_inputs;
 
-    public Rigidbody PlayerRigidbody => m_rigidbody;
 
     [Header("Movement")]
     [SerializeField] private MovementData m_movementData;
@@ -46,6 +48,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Looking")]
     [SerializeField] private Transform m_cameraTransform;
+    public Transform CameraTransform => m_cameraTransform;
+    
     [SerializeField] private float m_mouseSensivity = 1.0f;
     private float m_pitch;
     private float m_yaw;
@@ -53,6 +57,8 @@ public class PlayerController : MonoBehaviour
     [Header("Inputs")] 
     private InputActions.PlayerActions m_playerActions;
     public InputActions.PlayerActions PlayerActions => m_playerActions;
+    public delegate void OnVault();
+    public OnCollisionEntered Entity_OnVault;
 
     private void Start()
     {
@@ -118,7 +124,7 @@ public class PlayerController : MonoBehaviour
         m_velocity.xz *= math.max(1.0f - m_movementData.Friction * Time.deltaTime, 0.0f);
     }
 
-    public void AirMove()
+    private void AirMove()
     {
         Accelerate(m_inputDirection, m_movementData.AirAcceleration, m_movementData.AirSpeed * m_inputLength);
     }
@@ -131,7 +137,7 @@ public class PlayerController : MonoBehaviour
         dv = math.max(dv, 0.0f);
         m_velocity.xz += dirH * dv;
     }
-    
+
     private void CheckInputValues()
     {
         float2 inputWorld;
@@ -154,6 +160,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Entity_OnCollisionEntered?.Invoke();
         m_velocity = float3.zero;
     }
 }
