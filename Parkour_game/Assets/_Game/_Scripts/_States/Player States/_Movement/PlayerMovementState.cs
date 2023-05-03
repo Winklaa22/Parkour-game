@@ -71,7 +71,11 @@ namespace _Game._Scripts._States.Player_States._Movement
 
         public virtual void HandleInput() { }
 
-        public virtual void Update() { }
+        public virtual void Update()
+        {
+            if(_shouldVault && !_stateMachine.CurrentState.Equals(_stateMachine.VaultingState))
+                _stateMachine.ChangeState(_stateMachine.VaultingState);
+        }
 
         public virtual void PhysicsUpdate() { }
 

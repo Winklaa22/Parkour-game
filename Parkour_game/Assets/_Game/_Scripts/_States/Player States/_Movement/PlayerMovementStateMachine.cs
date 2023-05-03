@@ -11,6 +11,7 @@ namespace _Game._Scripts._States.Player_States._Movement
         public PlayerWalkingState WalkingState { get; }
         public PlayerRunningState RunningState { get; }
         public PlayerAirMovementState AirMovementState { get; }
+        public PlayerVaultingState VaultingState { get; }
 
         public PlayerMovementStateMachine(PlayerController player)
         {
@@ -20,6 +21,7 @@ namespace _Game._Scripts._States.Player_States._Movement
             RunningState = new PlayerRunningState(this);
             AirIdleState = new PlayerAirIdleState(this);
             AirMovementState = new PlayerAirMovementState(this);
+            VaultingState = new PlayerVaultingState(this);
         }
     }
 }

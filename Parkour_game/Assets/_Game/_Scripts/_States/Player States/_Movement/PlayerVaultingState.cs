@@ -1,28 +1,20 @@
 using System.Collections;
-using System.Collections.Generic;
 using _Game._Scripts._States.Player_States._Movement;
+using _Game._Scripts.Animations;
 using UnityEngine;
 
 public class PlayerVaultingState : PlayerMovementState
 {
-    public PlayerVaultingState(PlayerMovementStateMachine stateMachine) : base(stateMachine)
-    {
-        
-    }
+    public PlayerVaultingState(PlayerMovementStateMachine stateMachine) : base(stateMachine) { }
 
     public override void Enter()
     {
         base.Enter();
-        //todo Set Vault animation trigger
+        PlayerAnimationsManager.Instance.CameraHandler.SetTrigger(PlayerAnimations.VaultTrigger);
+        _stateMachine.Player.StartCoroutine(LerpVault(_vaultPos, .5f));
     }
 
-    public override void Update()
-    {
-        base.Update();
-        LerpVault(_vaultPos, .5f);
-    }
-
-    private void LerpVault(Vector3 targetPosition, float duration)
+    private IEnumerator LerpVault(Vector3 targetPosition, float duration)
     {
         var time = 0.0f;
         var player = _stateMachine.Player;
@@ -34,10 +26,11 @@ public class PlayerVaultingState : PlayerMovementState
         {
             player.transform.position = Vector3.Lerp(startPosition, targetPosition, time / duration);
             time += Time.deltaTime;
+            yield return null;
         }
 
         player.PlayerRigidbody.isKinematic = false;
         player.transform.position = targetPosition;
-        
+        _stateMachine.ChangeState(_stateMachine.IdleState);
     }
 }

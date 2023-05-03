@@ -2,30 +2,31 @@ namespace _Game._Scripts._States
 {
     public abstract class StateMachine
     {
-        protected IState currentState;
+        private IState _currentState;
+        public IState CurrentState => _currentState;
 
         public void ChangeState(IState state)
         {
-            currentState?.Exit();
+            _currentState?.Exit();
             
-            currentState = state;
+            _currentState = state;
             
-            currentState.Enter();
+            _currentState.Enter();
         }
 
         public void HandleInput()
         {
-            currentState?.HandleInput();
+            _currentState?.HandleInput();
         }
 
         public void Update()
         {
-            currentState?.Update();
+            _currentState?.Update();
         }
 
         public void PhysicsUpdate()
         {
-            currentState?.PhysicsUpdate();
+            _currentState?.PhysicsUpdate();
         }
     }
 }
