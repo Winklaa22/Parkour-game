@@ -19,13 +19,14 @@ namespace _Game._Scripts._States.Player_States._Movement
 
         [Header("Vaulting")] 
         protected Vector3 _vaultPos;
-        protected bool _shouldVault;
+
+        private bool _shouldVault;
 
         [Header("Jumping")] 
-        protected bool _shouldJump;
-        
+        private bool _shouldJump;
 
-        public PlayerMovementState(PlayerMovementStateMachine stateMachine)
+
+        protected PlayerMovementState(PlayerMovementStateMachine stateMachine)
         {
             _stateMachine = stateMachine;
             m_movementData = _stateMachine.Player.MovementData;
@@ -66,18 +67,23 @@ namespace _Game._Scripts._States.Player_States._Movement
 
         public virtual void Exit()
         {
-            Debug.Log($"{GetType().Name} exit");
+            // Debug.Log($"{GetType().Name} exit");
         }
 
         public virtual void HandleInput() { }
 
         public virtual void Update()
         {
-            if(_shouldVault && !_stateMachine.CurrentState.Equals(_stateMachine.VaultingState))
-                _stateMachine.ChangeState(_stateMachine.VaultingState);
+            TryToVault();
         }
 
         public virtual void PhysicsUpdate() { }
+
+        protected void TryToVault()
+        {
+            if(_shouldVault && !_stateMachine.CurrentState.Equals(_stateMachine.VaultingState))
+                _stateMachine.ChangeState(_stateMachine.VaultingState);
+        }
 
         protected void SetMaxGroundSpeed(float value)
         {
@@ -87,6 +93,16 @@ namespace _Game._Scripts._States.Player_States._Movement
         protected void SetGroundAcceleration(float value)
         {
             _stateMachine.Player.GroundAcceleration = value;
+        }
+
+        protected void TryToJump()
+        {
+            if (!_shouldJump)
+                return;
+            
+            Debug.Log("Sadsd");
+            _stateMachine.Player.Jump();
+            _shouldJump = false;
         }
         
         private bool CanVault()

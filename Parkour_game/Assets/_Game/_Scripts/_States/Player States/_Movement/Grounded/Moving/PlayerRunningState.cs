@@ -20,12 +20,15 @@ namespace _Game._Scripts._States.Player_States._Movement.Grounded.Moving
             base.Update();
 
             if (GetEnvironmentState() == EnvironmentState.AIR)
-                _stateMachine.ChangeState(_stateMachine.AirIdleState);
+                _stateMachine.ChangeState(_stateMachine.FallingState);
         
             if(!IsMoving) 
                 _stateMachine.ChangeState(_stateMachine.IdleState);
+
+            if (_shouldWalk)
+                _stateMachine.ChangeState(_stateMachine.WalkingState);
             
-            
+            TryToJump();
         }
     }
 }

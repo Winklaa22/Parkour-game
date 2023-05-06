@@ -2,9 +2,7 @@ namespace _Game._Scripts._States.Player_States._Movement.Grounded.Moving
 {
     public class PlayerWalkingState : PlayerMovementState
     {
-        public PlayerWalkingState(PlayerMovementStateMachine stateMachine) : base(stateMachine)
-        {
-        }
+        public PlayerWalkingState(PlayerMovementStateMachine stateMachine) : base(stateMachine) { }
 
         public override void Enter()
         {
@@ -18,11 +16,15 @@ namespace _Game._Scripts._States.Player_States._Movement.Grounded.Moving
             base.Update();
             
             if (GetEnvironmentState() == EnvironmentState.AIR)
-                _stateMachine.ChangeState(_stateMachine.AirIdleState);
+                _stateMachine.ChangeState(_stateMachine.FallingState);
 
             if (!IsMoving)
                 _stateMachine.ChangeState(_stateMachine.IdleState);
-
+            
+            if(!_shouldWalk)
+                _stateMachine.ChangeState(_stateMachine.RunningState);
+            
+            TryToJump();
         }
     }
 }

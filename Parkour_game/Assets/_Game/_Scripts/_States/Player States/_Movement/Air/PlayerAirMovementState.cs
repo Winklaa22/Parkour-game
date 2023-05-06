@@ -21,10 +21,8 @@ public class PlayerAirMovementState : PlayerMovementState
         base.Update();
         
         if (GetEnvironmentState() == EnvironmentState.GROUND)
-            _stateMachine.ChangeState(_stateMachine.AirIdleState);
+            _stateMachine.ChangeState(_stateMachine.FallingState);
         
-        if(IsMoving)
-            _stateMachine.ChangeState(_stateMachine.AirMovementState);
         
     }
 }

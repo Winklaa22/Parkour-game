@@ -54,6 +54,9 @@ public class PlayerController : MonoBehaviour
     private float m_pitch;
     private float m_yaw;
 
+    [Header("Jumping")] 
+    [SerializeField] private float m_jumpForce;
+
     [Header("Inputs")] 
     private InputActions.PlayerActions m_playerActions;
     public InputActions.PlayerActions PlayerActions => m_playerActions;
@@ -91,6 +94,11 @@ public class PlayerController : MonoBehaviour
         }
         
         m_rigidbody.velocity = new float3(m_velocity.x, m_rigidbody.velocity.y, m_velocity.z);
+    }
+
+    public void Jump()
+    {
+        m_rigidbody.AddForce(Vector3.up * m_jumpForce, ForceMode.Impulse);
     }
 
     private void FixedUpdate()
