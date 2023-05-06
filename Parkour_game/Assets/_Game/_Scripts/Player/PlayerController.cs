@@ -14,6 +14,12 @@ public class PlayerController : MonoBehaviour
     public CapsuleCollider PlayerCollider => m_playerCollider;
 
     [SerializeField] private Rigidbody m_rigidbody;
+    private bool m_canMove = true;
+    public bool CanMove
+    {
+        set => m_canMove = value;
+    }
+    
     public Rigidbody PlayerRigidbody => m_rigidbody;
     public delegate void OnCollisionEntered();
     public OnCollisionEntered Entity_OnCollisionEntered;
@@ -54,9 +60,6 @@ public class PlayerController : MonoBehaviour
     private float m_pitch;
     private float m_yaw;
 
-    [Header("Jumping")] 
-    [SerializeField] private float m_jumpForce;
-
     [Header("Inputs")] 
     private InputActions.PlayerActions m_playerActions;
     public InputActions.PlayerActions PlayerActions => m_playerActions;
@@ -82,6 +85,9 @@ public class PlayerController : MonoBehaviour
 
     public void SetMovement()
     {
+        if(!m_canMove)
+            return;
+        
         switch (GetEnvironmentState())
         {
             case EnvironmentState.AIR:
@@ -94,11 +100,6 @@ public class PlayerController : MonoBehaviour
         }
         
         m_rigidbody.velocity = new float3(m_velocity.x, m_rigidbody.velocity.y, m_velocity.z);
-    }
-
-    public void Jump()
-    {
-        m_rigidbody.AddForce(Vector3.up * m_jumpForce, ForceMode.Impulse);
     }
 
     private void FixedUpdate()

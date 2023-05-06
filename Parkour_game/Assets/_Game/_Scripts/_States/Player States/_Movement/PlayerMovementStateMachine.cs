@@ -11,6 +11,9 @@ namespace _Game._Scripts._States.Player_States._Movement
         public PlayerWalkingState WalkingState { get; }
         public PlayerRunningState RunningState { get; }
         public PlayerVaultingState VaultingState { get; }
+        public PlayerJumpingState JumpingState { get; }
+        public PlayerSlidingState SlidingState { get; }
+        public PlayerCrouchingState CrouchingState { get; }
 
         public PlayerMovementStateMachine(PlayerController player)
         {
@@ -20,6 +23,9 @@ namespace _Game._Scripts._States.Player_States._Movement
             RunningState = new PlayerRunningState(this);
             FallingState = new PlayerFallingState(this);
             VaultingState = new PlayerVaultingState(this);
+            JumpingState = new PlayerJumpingState(this);
+            CrouchingState = new PlayerCrouchingState(this);
+            SlidingState = new PlayerSlidingState(this);
         }
     }
 }

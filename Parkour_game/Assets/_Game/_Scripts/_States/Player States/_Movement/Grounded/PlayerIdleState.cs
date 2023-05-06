@@ -24,6 +24,7 @@ namespace _Game._Scripts._States.Player_States._Movement.Grounded
                 _stateMachine.ChangeState(_stateMachine.RunningState);
             
             TryToJump();
+            TryToCrouch();
         }
     }
 }

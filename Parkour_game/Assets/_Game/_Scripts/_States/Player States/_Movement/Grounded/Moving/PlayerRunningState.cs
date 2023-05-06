@@ -29,6 +29,7 @@ namespace _Game._Scripts._States.Player_States._Movement.Grounded.Moving
                 _stateMachine.ChangeState(_stateMachine.WalkingState);
             
             TryToJump();
+            TryToSlide();
         }
     }
 }

@@ -19,11 +19,13 @@ namespace _Game._Scripts._States.Player_States._Movement
 
         [Header("Vaulting")] 
         protected Vector3 _vaultPos;
-
+        
         private bool _shouldVault;
 
         [Header("Jumping")] 
         private bool _shouldJump;
+
+        [Header("Sliding")] protected bool _shouldSlide;
 
 
         protected PlayerMovementState(PlayerMovementStateMachine stateMachine)
@@ -58,6 +60,15 @@ namespace _Game._Scripts._States.Player_States._Movement
                 _shouldVault = false;
                 _shouldJump = false;
             };
+            
+            _stateMachine.Player.PlayerActions.Slide.started += delegate(InputAction.CallbackContext context)
+            {
+                _shouldSlide = true;
+            };
+            _stateMachine.Player.PlayerActions.Slide.canceled += delegate(InputAction.CallbackContext context)
+            {
+                _shouldSlide = false;
+            };
         }
         
         public virtual void Enter()
@@ -81,8 +92,11 @@ namespace _Game._Scripts._States.Player_States._Movement
 
         protected void TryToVault()
         {
-            if(_shouldVault && !_stateMachine.CurrentState.Equals(_stateMachine.VaultingState))
-                _stateMachine.ChangeState(_stateMachine.VaultingState);
+            if (!_shouldVault || _stateMachine.CurrentState.Equals(_stateMachine.VaultingState)) 
+                return;
+            
+            _stateMachine.ChangeState(_stateMachine.VaultingState);
+            _shouldVault = false;
         }
 
         protected void SetMaxGroundSpeed(float value)
@@ -100,9 +114,31 @@ namespace _Game._Scripts._States.Player_States._Movement
             if (!_shouldJump)
                 return;
             
-            Debug.Log("Sadsd");
-            _stateMachine.Player.Jump();
+            _stateMachine.ChangeState(_stateMachine.JumpingState);
             _shouldJump = false;
+        }
+
+        protected void TryToSlide()
+        {
+            if(!_shouldSlide)
+                return;
+            
+            _stateMachine.ChangeState(_stateMachine.SlidingState);
+            _shouldSlide = false;
+        }
+
+        protected void TryToCrouch()
+        {
+            if(!_shouldSlide)
+                return;
+            
+            _stateMachine.ChangeState(_stateMachine.CrouchingState);
+        }
+        
+        protected bool HasSomethingOverhead()
+        {
+            return Physics.SphereCast(_stateMachine.Player.transform.position + new Vector3(0, m_movementData.DetectGroundSpherePos, 0),
+                m_movementData.DetectGroundSphereRadius, Vector3.down, out var sth, .5f);
         }
         
         private bool CanVault()
