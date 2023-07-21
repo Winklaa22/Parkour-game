@@ -9,6 +9,11 @@ public class MovementData
     public float AirAcceleration = 20.0f;
     public float JumpVelocity = 5.0f;
 
+    [Header("Celling")]
+    public float DetectCellingSpherePos = .25f;
+    public float DetectCellingSphereRadius = .7f;
+    
+    
     [Header("Ground")]
     public float DetectGroundSphereRadius = .25f;
     public float DetectGroundSpherePos = .7f;

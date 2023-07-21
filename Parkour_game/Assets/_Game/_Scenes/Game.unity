@@ -3182,9 +3182,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1711779410}
     m_Modifications:
+    - target: {fileID: 1013441269510208580, guid: ab538962950f29141924af2e0c6a882d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1013441269763597552, guid: ab538962950f29141924af2e0c6a882d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1013441271117526498, guid: ab538962950f29141924af2e0c6a882d, type: 3}
       propertyPath: m_jumpForce
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1013441271117526498, guid: ab538962950f29141924af2e0c6a882d, type: 3}
+      propertyPath: m_movementData.SlidingTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1013441271117526498, guid: ab538962950f29141924af2e0c6a882d, type: 3}
+      propertyPath: m_movementData.SlidingAnimationEase
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1013441271117526499, guid: ab538962950f29141924af2e0c6a882d, type: 3}
       propertyPath: m_RootOrder

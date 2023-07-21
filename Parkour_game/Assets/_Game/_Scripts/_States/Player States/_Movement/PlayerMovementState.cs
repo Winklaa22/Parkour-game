@@ -137,8 +137,8 @@ namespace _Game._Scripts._States.Player_States._Movement
         
         protected bool HasSomethingOverhead()
         {
-            return Physics.SphereCast(_stateMachine.Player.transform.position + new Vector3(0, m_movementData.DetectGroundSpherePos, 0),
-                m_movementData.DetectGroundSphereRadius, Vector3.down, out var sth, .5f);
+            return Physics.SphereCast(_stateMachine.Player.transform.position + new Vector3(0, m_movementData.DetectCellingSpherePos, 0),
+                m_movementData.DetectCellingSphereRadius, Vector3.down, out var sth, .5f);
         }
         
         private bool CanVault()
