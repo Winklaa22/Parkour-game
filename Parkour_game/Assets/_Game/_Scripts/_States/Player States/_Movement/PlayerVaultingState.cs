@@ -11,7 +11,7 @@ public class PlayerVaultingState : PlayerMovementState
     {
         base.Enter();
         PlayerAnimationsManager.Instance.CameraHandler.SetTrigger(PlayerAnimations.VaultTrigger);
-        PlayerAnimationsManager.Instance.PistolHandler.SetTrigger(PlayerAnimations.HideTrigger);
+        PlayerAnimationsManager.Instance.FPSHandler.SetTrigger(PlayerAnimations.HideTrigger);
         _stateMachine.Player.StartCoroutine(LerpVault(_vaultPos, .5f));
     }
 
@@ -30,7 +30,7 @@ public class PlayerVaultingState : PlayerMovementState
             yield return null;
         }
 
-        PlayerAnimationsManager.Instance.PistolHandler.SetTrigger(PlayerAnimations.ShowTrigger);
+        PlayerAnimationsManager.Instance.FPSHandler.SetTrigger(PlayerAnimations.ShowTrigger);
         player.PlayerRigidbody.isKinematic = false;
         player.transform.position = targetPosition;
         _stateMachine.ChangeState(_stateMachine.IdleState);
