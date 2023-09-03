@@ -51,7 +51,7 @@ namespace _Game._Scripts._States.Player_States._Movement
             {
                 if (CanVault())
                     _shouldVault = true;
-                else
+                else if (_stateMachine.Player.GetEnvironmentState() == EnvironmentState.GROUND)
                     _shouldJump = true;
             };
             
@@ -73,7 +73,7 @@ namespace _Game._Scripts._States.Player_States._Movement
         
         public virtual void Enter()
         {
-            Debug.Log($"{GetType().Name} enter");
+             Debug.Log($"{GetType().Name} enter");
         }
 
         public virtual void Exit()
@@ -111,11 +111,13 @@ namespace _Game._Scripts._States.Player_States._Movement
 
         protected void TryToJump()
         {
-            if (!_shouldJump)
+            if (!_shouldJump || _stateMachine.Player.IsJumping)
                 return;
             
-            _stateMachine.ChangeState(_stateMachine.JumpingState);
             _shouldJump = false;
+            _stateMachine.Player.IsJumping = true;
+            _stateMachine.ChangeState(_stateMachine.JumpingState);
+            
         }
 
         protected void TryToSlide()
@@ -137,8 +139,8 @@ namespace _Game._Scripts._States.Player_States._Movement
         
         protected bool HasSomethingOverhead()
         {
-            return Physics.SphereCast(_stateMachine.Player.transform.position + new Vector3(0, m_movementData.DetectCellingSpherePos, 0),
-                m_movementData.DetectCellingSphereRadius, Vector3.down, out var sth, .5f);
+            return Physics.SphereCast(_stateMachine.Player.PlayerCollider.transform.position + new Vector3(0, m_movementData.DetectCellingSpherePos, 0),
+                m_movementData.DetectCellingSphereRadius, Vector3.up, out var sth, .5f);
         }
         
         private bool CanVault()

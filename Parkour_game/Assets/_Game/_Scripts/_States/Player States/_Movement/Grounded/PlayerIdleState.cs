@@ -6,11 +6,15 @@ namespace _Game._Scripts._States.Player_States._Movement.Grounded
     {
         public PlayerIdleState(PlayerMovementStateMachine stateMachine) : base(stateMachine)
         {
+            
         }
 
         public override void Enter()
         {
             base.Enter();
+            Debug.Log($"Entered idle: {GetEnvironmentState()} Jumping {_stateMachine.Player.IsJumping}");
+            _stateMachine.Player.IsJumping = false;
+
         }
 
         public override void Update()

@@ -12,7 +12,10 @@ public class PlayerCrouchingState : PlayerMovementState
 
     public override void Enter()
     {
-        Crouch();
+        Debug.Log("Crouch");
+        SetGroundAcceleration(m_movementData.WalkingAcceleration);
+        SetMaxGroundSpeed(m_movementData.WalkingMaxSpeed);
+        m_player.StartCoroutine(Crouch());
     }
 
     public override void Update()
@@ -20,21 +23,48 @@ public class PlayerCrouchingState : PlayerMovementState
         base.Update();
         
         if(!_shouldSlide && !HasSomethingOverhead())
-            StopCrouching();
+            m_player.StartCoroutine(StopCrouching());
     }
 
-    private void Crouch()
+
+
+    private IEnumerator Crouch()
     {
         PlayerAnimationsManager.Instance.CameraHandler.SetBool(PlayerAnimations.CrouchingBool, true);
-        m_player.transform.DOScaleY(m_movementData.CrouchColliderSize, m_movementData.CrouchAnimationDuration).SetEase(m_movementData.CrouchAnimationEase);
-        m_player.CameraTransform.DOLocalMoveY(m_movementData.CrouchCameraSize, m_movementData.CrouchAnimationDuration).SetEase(m_movementData.CrouchAnimationEase);;
+        if (!m_player.IsSliding)
+        {
+            m_player.PlayerCollider.transform
+                .DOLocalMoveY(m_movementData.CrouchColliderPos, m_movementData.CrouchAnimationDuration)
+                .SetEase(m_movementData.CrouchAnimationEase);
+            m_player.PlayerCollider.transform
+                .DOScaleY(m_movementData.CrouchColliderSize, m_movementData.CrouchAnimationDuration)
+                .SetEase(m_movementData.CrouchAnimationEase);
+            m_player.CameraTransform
+                .DOLocalMoveY(m_movementData.CrouchCameraSize, m_movementData.CrouchAnimationDuration)
+                .SetEase(m_movementData.CrouchAnimationEase);
+            
+        }
+        else
+        {
+            m_player.IsSliding = false;
+            m_player.PlayerRigidbody.isKinematic = true;
+        }
+
+        yield return new WaitForSeconds(m_movementData.CrouchAnimationDuration);
+        m_player.PlayerRigidbody.isKinematic = false;
+
     }
 
-    private void StopCrouching()
+    private IEnumerator StopCrouching()
     {
+        Debug.Log($"Stop crouching: {HasSomethingOverhead()}");
         PlayerAnimationsManager.Instance.CameraHandler.SetBool(PlayerAnimations.CrouchingBool, false);
-        m_player.transform.DOScaleY(1, m_movementData.CrouchAnimationDuration).SetEase(m_movementData.CrouchAnimationEase);
+        m_player.PlayerCollider.transform.DOScaleY(1, m_movementData.CrouchAnimationDuration).SetEase(m_movementData.CrouchAnimationEase);
+        m_player.PlayerCollider.transform.DOLocalMoveY(0, m_movementData.CrouchAnimationDuration).SetEase(m_movementData.CrouchAnimationEase);
         m_player.CameraTransform.DOLocalMoveY(.6f, m_movementData.CrouchAnimationDuration).SetEase(m_movementData.CrouchAnimationEase);
         _stateMachine.ChangeState(_stateMachine.IdleState);
+        m_player.PlayerRigidbody.isKinematic = true;
+        yield return new WaitForSeconds(m_movementData.CrouchAnimationDuration);
+        m_player.PlayerRigidbody.isKinematic = false;
     }
 }

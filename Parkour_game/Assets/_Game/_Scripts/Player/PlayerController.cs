@@ -33,13 +33,13 @@ public class PlayerController : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] private MovementData m_movementData;
-    private float m_groundAccelaration;
+    [SerializeField] private float m_groundAccelaration;
     public float GroundAcceleration
     {
         set => m_groundAccelaration = value;
     }
 
-    private float m_groundMaxSpeed;
+    [SerializeField] private float m_groundMaxSpeed;
     public float GroundMaxSpeed
     {
         set => m_groundMaxSpeed = value;
@@ -66,6 +66,23 @@ public class PlayerController : MonoBehaviour
     public delegate void OnVault();
     public OnCollisionEntered Entity_OnVault;
 
+    [Header("Jumping")] 
+    private bool m_isJumping;
+
+    public bool IsJumping
+    {
+        get => m_isJumping;
+        set => m_isJumping = value;
+    }
+    
+    [Header("Sliding")]
+    private bool m_isSliding;
+
+    public bool IsSliding
+    {
+        get => m_isSliding;
+        set => m_isSliding = value;
+    }
     private void Start()
     {
         m_playerActions = InputManager.Instance.PlayerActions;
@@ -171,5 +188,26 @@ public class PlayerController : MonoBehaviour
     {
         Entity_OnCollisionEntered?.Invoke();
         m_velocity = float3.zero;
+    }
+
+    private void OnDrawGizmos()
+    {
+        RaycastHit hit;
+        if (Physics.SphereCast(transform.position + new Vector3(0, m_movementData.DetectCellingSpherePos, 0),
+                m_movementData.DetectCellingSphereRadius, Vector3.up, out var sth, .5f))
+        {
+            Gizmos.color = Color.green;
+            Vector3 sphereCastMidpoint = transform.position + new Vector3(0, m_movementData.DetectCellingSpherePos, 0);
+            Gizmos.DrawWireSphere(sphereCastMidpoint, m_movementData.DetectCellingSphereRadius);
+            Gizmos.DrawSphere(sth.point, 0.1f);
+            Debug.DrawLine(transform.position, sphereCastMidpoint, Color.green);
+        }
+        else
+        {
+            Gizmos.color = Color.red;
+            Vector3 sphereCastMidpoint = transform.position + new Vector3(0, m_movementData.DetectCellingSpherePos, 0);
+            Gizmos.DrawWireSphere(sphereCastMidpoint, m_movementData.DetectCellingSphereRadius);
+            Debug.DrawLine(transform.position, sphereCastMidpoint, Color.red);
+        }
     }
 }

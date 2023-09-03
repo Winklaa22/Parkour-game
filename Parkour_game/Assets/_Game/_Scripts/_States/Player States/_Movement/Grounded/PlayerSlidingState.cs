@@ -22,11 +22,15 @@ public class PlayerSlidingState : PlayerMovementState
     
     private void Slide()
     {
+        m_player.IsSliding = true;
         m_player.CanMove = false;
         m_player.Velocity = float3.zero;
         m_sliceDirection = m_player.transform.forward;
         m_player.PlayerRigidbody.AddForce(m_sliceDirection * 2f, ForceMode.Impulse);
-        m_player.transform.DOScaleY(m_movementData.SlidingColliderSize, .25f);
+        m_player.PlayerCollider.transform.DOScaleY(m_movementData.SlidingColliderSize, .25f);
+        m_player.PlayerCollider.transform
+            .DOLocalMoveY(m_movementData.SlidingColliderPos, m_movementData.CrouchAnimationDuration)
+            .SetEase(m_movementData.SlidingAnimationEase);
         m_player.CameraTransform.DOLocalMoveY(0, .25f);
         PlayerAnimationsManager.Instance.CameraHandler.SetBool(PlayerAnimations.SlidingBool, true);
         m_player.StartCoroutine(Sliding());
@@ -52,12 +56,16 @@ public class PlayerSlidingState : PlayerMovementState
         if (HasSomethingOverhead())
         {
             _stateMachine.ChangeState(_stateMachine.CrouchingState);
+            m_player.CanMove = true;
             return;
         }
+        m_player.PlayerCollider.transform.DOScaleY(1, m_movementData.SlidingAnimationDuration).SetEase(m_movementData.SlidingAnimationEase);
+        m_player.PlayerCollider.transform.DOLocalMoveY(0, m_movementData.CrouchAnimationDuration).SetEase(m_movementData.SlidingAnimationEase);
 
-        m_player.transform.DOScaleY(1, m_movementData.SlidingAnimationDuration).SetEase(m_movementData.SlidingAnimationEase);
         m_player.CameraTransform.DOLocalMoveY(.6f, m_movementData.SlidingAnimationDuration).SetEase(m_movementData.SlidingAnimationEase);
         m_player.CanMove = true;
+        m_player.IsSliding = false;
+
         _stateMachine.ChangeState(_stateMachine.IdleState);
     }
 }

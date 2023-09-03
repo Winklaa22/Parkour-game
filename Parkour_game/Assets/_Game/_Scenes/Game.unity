@@ -3202,6 +3202,10 @@ PrefabInstance:
       propertyPath: m_movementData.SlidingAnimationEase
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1013441271117526498, guid: ab538962950f29141924af2e0c6a882d, type: 3}
+      propertyPath: m_movementData.DetectCellingSpherePos
+      value: -0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 1013441271117526499, guid: ab538962950f29141924af2e0c6a882d, type: 3}
       propertyPath: m_RootOrder
       value: 0
