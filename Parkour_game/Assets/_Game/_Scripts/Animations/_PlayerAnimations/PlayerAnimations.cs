@@ -10,4 +10,6 @@ public static class PlayerAnimations
     public const string CrouchingBool = "Crouching";
     
     // FPS animations
+    public const string ShowTrigger = "Show";
+    public const string HideTrigger = "Hide";
 }
