@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum WeaponType
 {
+    EMPTY,
     PISTOL,
     ASSAULT_RIFLE
 }

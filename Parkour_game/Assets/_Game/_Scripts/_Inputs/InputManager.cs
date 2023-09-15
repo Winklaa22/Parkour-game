@@ -10,6 +10,7 @@ public class InputManager : SceneSingleton<InputManager>
 
     private InputActions.PlayerActions m_playerActions;
     public InputActions.PlayerActions PlayerActions => m_playerActions;
+    public float ScrollAxis => m_inputActions.Player.Scroll.ReadValue<float>();
 
     protected override void OnAwake()
     {

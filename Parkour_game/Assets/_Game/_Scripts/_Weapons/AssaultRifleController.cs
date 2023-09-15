@@ -1,18 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class AssaultRifleController : Weapon
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void Show()
     {
-        
+        base.Show();
+        InputManager.Instance.Actions.Weapon.Shot.started += OnShotInputStated;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnShotInputStated(InputAction.CallbackContext obj)
     {
-        
+        Shot();
+    }
+
+    public override void Hide()
+    {
+        base.Hide();
+        InputManager.Instance.Actions.Weapon.Shot.canceled += OnShotInputEnded;
+
+    }
+
+    private void OnShotInputEnded(InputAction.CallbackContext obj)
+    {
+        throw new System.NotImplementedException();
     }
 }

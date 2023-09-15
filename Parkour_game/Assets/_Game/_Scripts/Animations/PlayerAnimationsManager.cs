@@ -17,7 +17,24 @@ namespace _Game._Scripts.Animations
         {
             base.OnAwake();
             _cameraHandler = new AnimationsHandler(m_cameraAnimator);
+        }
+
+        protected override void OnStart()
+        {
+            base.OnStart();
             _fpsHandler = new AnimationsHandler(_fpsAnimator);
+
+        }
+
+        public void ShowGun()
+        {
+            _fpsHandler = new AnimationsHandler(_fpsAnimator);
+            _fpsHandler.SetTrigger(PlayerAnimations.ShowTrigger);
+        }
+
+        public void HideGun()
+        {
+            _fpsHandler.SetTrigger(PlayerAnimations.HideTrigger);
         }
     }
 }
